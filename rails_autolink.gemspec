@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.description = 'This is an extraction of the `auto_link` method from rails. The `auto_link` method was removed from Rails in version Rails 3.1. This gem is meant to bridge the gap for people migrating.'
 
   s.add_dependency 'rails', '> 3.1'
+  s.add_dependency 'public_suffix', '>= 1.5.1'
   s.required_ruby_version = '>= 1.9.3'
   s.license = 'MIT'
 
