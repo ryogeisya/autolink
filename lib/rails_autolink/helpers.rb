@@ -5,6 +5,7 @@ module RailsAutolink
   require 'active_support/core_ext/array/extract_options'
   require 'active_support/core_ext/hash/reverse_merge'
   require 'active_support/core_ext/hash/keys'
+  require 'public_suffix'
 
   module ::ActionView
     module Helpers # :nodoc:
@@ -132,17 +133,22 @@ module RailsAutolink
               if auto_linked?($`, $')
                 text.html_safe
               else
-                display_text = (block_given?) ? yield(text) : text
+                # validate tld
+                if PublicSuffix.valid?(text)
+                  display_text = (block_given?) ? yield(text) : text
 
-                unless options[:sanitize] == false
-                  text         = sanitize(text)
-                  display_text = sanitize(display_text) unless text == display_text
-                end
+                  unless options[:sanitize] == false
+                    text         = sanitize(text)
+                    display_text = sanitize(display_text) unless text == display_text
+                  end
 
-                unless options[:custom_format].empty?
-                  options[:custom_format] % display_text
+                  unless options[:custom_format].empty?
+                    options[:custom_format] % display_text
+                  else
+                    mail_to text, display_text, html_options
+                  end
                 else
-                  mail_to text, display_text, html_options
+                  text
                 end
               end
             end

@@ -1,3 +1,7 @@
+=== 1.1.7 / 2015-08-15
+
+* Public Suffix support
+
 === 1.1.6 / 2014-06-08
 
 * Fixed a potential XSS vulnerability #47
