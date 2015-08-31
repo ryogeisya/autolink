@@ -1,3 +1,8 @@
+=== 1.1.8 / 2015-08-31
+
+* unliked comma 
+* support 〜
+
 === 1.1.7 / 2015-08-15
 
 * Public Suffix support
