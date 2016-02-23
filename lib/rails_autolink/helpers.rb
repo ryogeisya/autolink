@@ -73,7 +73,7 @@ module RailsAutolink
 
           AUTO_LINK_RE = %r{
               (?: ((?:ed2k|ftp|http|https|irc|mailto|news|gopher|nntp|telnet|webcal|xmpp|callto|feed|svn|urn|aim|rsync|tag|ssh|sftp|rtsp|afs|file):)//)
-              [^\s<\u00A0\u2200-\u2300\u2500-\u2542\u3000-\u303F\uFF01-\uFF5D\uFFE3\u309B\u309C\u002C"]+
+              [^\s<\u00A0"]+
             }ix
 
           # regexps for determining context, used high-volume
@@ -99,13 +99,13 @@ module RailsAutolink
                 href
               else
                 # don't include trailing punctuation character as part of the URL
-                while href.sub!(/[^#{WORD_PATTERN}\/-=&～]$/, '')
-                  punctuation.push $&
-                  if opening = BRACKETS[punctuation.last] and href.scan(opening).size > href.scan(punctuation.last).size
-                    href << punctuation.pop
-                    break
-                  end
-                end
+                #while href.sub!(/[^#{WORD_PATTERN}\/-=&～]$/, '')
+                #  punctuation.push $&
+                #  if opening = BRACKETS[punctuation.last] and href.scan(opening).size > href.scan(punctuation.last).size
+                #    href << punctuation.pop
+                #    break
+                #  end
+                #end
 
                 link_text = block_given?? yield(href) : href
                 href = 'http://' + href unless scheme
